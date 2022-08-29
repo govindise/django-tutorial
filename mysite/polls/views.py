@@ -1,10 +1,16 @@
 # Create your views here.
+# importing task from tasks.py file
+from .task import test_func
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
+from rest_framework import viewsets
+from django.http import HttpResponse
 from .models import Question, Choice
+from rest_framework import permissions
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
+from .serializers import QuestionSerializer, ChoiceSerializer
 
 
 class IndexView(generic.ListView):
@@ -49,3 +55,27 @@ def vote(request, question_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+
+def test(request):
+    # call the test_function using delay, calling task  
+    print(test_func.delay())
+    return HttpResponse("Done")
+
+
+# create a viewset
+class QuestionViewSet(viewsets.ModelViewSet):
+    # define queryset
+    queryset = Question.objects.all().order_by('question_text')
+    # specify serializer to be used
+    serializer_class = QuestionSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+# create a viewset
+class ChoiceViewSet(viewsets.ModelViewSet):
+    # define queryset
+    queryset = Choice.objects.all()
+    # specify serializer to be used
+    serializer_class = ChoiceSerializer
+    permission_classes = [permissions.IsAuthenticated]
