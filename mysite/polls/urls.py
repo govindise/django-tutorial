@@ -1,7 +1,7 @@
 from . import views
 from rest_framework import routers
 from django.urls import path, include
-from .views import QuestionViewSet, ChoiceViewSet
+from .views import QuestionViewSet, ChoiceViewSet, kafkaConsumer
 
 # define the router
 router = routers.DefaultRouter()
@@ -19,4 +19,7 @@ urlpatterns = [
     path('test/', views.test, name='test'),
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('kafkaproducer/', views.kafkaProducter, name='kafkaproducer'),
+    path('kafkaconsumer/', views.kafkaConsumer, name='kafkaconsumer'),
+    path('kafkafunction/', views.kafkaFunction, name='kafkafunction'),
 ]

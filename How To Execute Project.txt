@@ -1,0 +1,23 @@
+1. Install python
+2. Install django
+3. Install django restframework
+4. Install celery
+5. Install flower
+6. Install redis
+
+
+Start Django
+----------------------------------------------------------------------------------------------------
+python manage.py runserver
+python manage.py makemigrations
+python manage.py migrate
+
+
+Start Celery
+----------------------------------------------------------------------------------------------------
+python -m celery -A mysite worker -l info
+
+
+Start Flower
+----------------------------------------------------------------------------------------------------
+python -m celery --app mysite --broker=redis://localhost:6379 flower --address=localhost --port=5555

@@ -4,15 +4,15 @@ from rest_framework import serializers
  
 
 # Create a model serializer
-class QuestionSerializer(serializers.HyperlinkedModelSerializer):
+class QuestionSerializer(serializers.ModelSerializer):
     # specify model and fields
     class Meta:
         model = Question
-        fields = ('question_text', 'pub_date')
+        fields = '__all__'
 
 
 # Create a model serializer
-class ChoiceSerializer(serializers.HyperlinkedModelSerializer):
+class ChoiceSerializer(serializers.ModelSerializer):
     # specify model and fields
     class Meta:
         model = Choice

@@ -79,3 +79,42 @@ class ChoiceViewSet(viewsets.ModelViewSet):
     # specify serializer to be used
     serializer_class = ChoiceSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+
+from kafka import KafkaProducer
+from kafka import KafkaConsumer
+from json import loads
+from json import dumps
+from time import sleep
+
+
+def kafkaProducter(request) :
+    producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
+                            value_serializer=lambda x: dumps(x).encode('utf-8'),
+                            api_version=(0, 10, 1))
+    
+    serialized_data = {'KafkaProducer' : 'Hi'}
+    producer.send('temp', value=serialized_data)        
+
+    return HttpResponse(serialized_data)
+
+
+def kafkaConsumer(request) :
+    consumer = KafkaConsumer('temp',
+                            bootstrap_servers=['localhost:9092'],
+                            value_deserializer=lambda x: loads(x.decode('utf-8')),
+                            api_version=(0, 10, 1))
+    deserialized_data = []
+    for message in consumer :
+        deserialized_data.append(message.value)
+    
+    print(deserialized_data)
+    return HttpResponse({'KafkaConsumer':str(deserialized_data)})
+
+
+def kafkaFunction(request):
+  from kafka import KafkaProducer
+  producer = KafkaProducer(bootstrap_servers='localhost:9092',
+                           value_serializer=lambda x: dumps(x).encode('utf-8'))
+  producer.send('foobar', b'test')
+  return HttpResponse(200)
