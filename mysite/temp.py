@@ -1,4 +1,3 @@
-'''
 temp = [0, 10, 15, 20, 1, 5, 60, 8, 79, 0]
 
 peek_list = []
@@ -107,7 +106,7 @@ for element in input_list :
                         stack.pop()
 
 print(stack)
-'''
+
 
 string = 'Govindaraju'
 reverse_string = ''
@@ -128,7 +127,7 @@ for number in unique_numbers :
 for number in numbers :
         frequency[number] = frequency[number] + 1
 
-'''
+
 # Using Bubble Sort Technique
 #############################
 sorted_frequency = []
@@ -141,7 +140,7 @@ for i in range(len(sorted_frequency)-1) :
                         temp = sorted_frequency[j]
                         sorted_frequency[j] = sorted_frequency[j+1]
                         sorted_frequency[j+1] = temp
-'''
+
 
 sorted_frequency = sorted(frequency.items(), key=lambda item: item[1])
 sorted_frequency_list = []
@@ -152,3 +151,62 @@ for i in sorted_frequency :
 
 sorted_frequency_list.reverse()
 print(sorted_frequency_list)
+
+
+# Generators
+################################################
+def generator() :
+        yield 1
+        yield 2
+        yield 3
+
+x = generator()
+
+print(x.__next__())
+print(x.__next__())
+print(x.__next__())
+
+
+# Decorators
+################################################
+def hello_decorator(func):
+    def inner1(*args, **kwargs):
+        print("before Execution")
+        returned_value = func(*args, **kwargs)
+        print("after Execution")
+        return returned_value
+    return inner1
+ 
+# adding decorator to the function
+@hello_decorator
+def sum_two_numbers(a, b):
+    print("Inside the function")
+    return a + b
+ 
+# getting the value through return of the function
+a, b = 1, 2
+print("Sum =", sum_two_numbers(a, b))
+
+
+# Ordered Dictionary
+##############################################
+from collections import OrderedDict
+print("This is a Dict:\n")
+d = {}
+d['a'] = 1
+d['b'] = 2
+d['c'] = 3
+d['d'] = 4
+
+for key, value in d.items():
+    print(key, value)
+ 
+print("\nThis is an Ordered Dict:\n")
+od = OrderedDict()
+od['a'] = 1
+od['b'] = 2
+od['c'] = 3
+od['d'] = 4
+ 
+for key, value in od.items():
+    print(key, value)
