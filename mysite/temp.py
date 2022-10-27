@@ -885,5 +885,313 @@ def findFinancialYearFormat(input) :
         print(output)
 
 findFinancialYearFormat(input)
-'''
 
+
+#collect the elements that has more than one occurence
+var3=['red', 'blue', 'orange','red','yellow','orange', 'red','white', 'black','pink','red','white','blue']
+countDictionary = {}
+
+for element in var3 :
+        countDictionary[element] = 0
+
+for element in var3 :
+        countDictionary[element] += 1
+
+for key, value in countDictionary.items() :
+        if value > 1 :
+                print(key)
+
+
+# using list comprehension, print list of all the even number from 0 to 20 and multiply each even number with 2.
+data = [x*2 for x in range(20) if x%2 == 0]
+print(data)
+
+
+# Define a function which can generate a list where the values are square of numbers between 1 and 20 (both included).
+# Then the function needs to print the last 5 elements in the list.
+
+def findSquares(numbersList) :
+        squaresList = [x*x for x in numbersList]
+        print('Last 5 Numbers In Squares List Are: ', squaresList[-5:])
+
+numbersList = [x for x in range(21)]
+findSquares(numbersList)
+
+
+# Write a program that accepts a sentence and calculate the number of letters and digits.
+data = 'dasjhgh 4234 m543kj51243 m235kjbkj235 5432k5b2'
+typeDictionary = {'Charecters': 0, 'Digits': 0}
+
+for charecter in data :
+        try :                
+                if type(int(charecter)) == int :
+                        typeDictionary['Digits'] +=1
+        except :
+                typeDictionary['Charecters'] +=1
+
+print(typeDictionary)
+
+
+
+# Thought Focus
+###############
+The median is the middle value in an ordered integer list. 
+If the size of the list is even, there is no middle value. 
+So the median is the mean of the two middle values.
+
+For examples, if arr = [2,3,4], the median is 3.
+For examples, if arr = [1,2,3,4], the median is (2 + 3) / 2 = 2.5.
+You are given an integer array nums and an integer k. 
+There is a sliding window of size k which is moving from the very left of the array to the very right. 
+You can only see the k numbers in the window. Each time the sliding window moves right by one position.
+
+Example 1:
+
+
+# Input: 
+# nums = [1, 3, -1, -3, 5, 3, 6, 7]
+# k = 3
+# output = [1.00000, -1.00000, -1.00000, 3.00000, 5.00000, 6.00000]
+
+nums = [1, 3, -1, -3, 5, 3, 6, 7]
+k = 4
+outputList = []
+
+for i in range(len(nums)-k+1) :
+        sublist = nums[i:i+k]
+        sortedSublist = sorted(sublist)
+
+        if k % 2 != 0 :
+                outputList.append(sortedSublist[k//2])
+        else :
+                outputList.append(format((sortedSublist[k//2-1] + sortedSublist[k//2])/2, '.5f'), )
+
+print('Output: ', outputList)
+
+
+# Given an integer n, return the count of all numbers with unique digits, x, where 0 <= x < 10n.
+# Example 1:
+
+# Input: n = 2
+# Output: 91
+# Explanation: The answer should be the total numbers in the range of 0 ≤ x < 100, excluding 11,22,33,44,55,66,77,88,99
+
+
+n = 3
+lastnumber = '1'+'0'*n
+lastnumber = int(lastnumber)
+outputList = []
+
+# Approach 1
+for i in range(lastnumber+1) :
+        temp = str(i)
+        repeated = False
+        if len(temp) > 1 :
+                for j in range (len(temp)) :
+                        if temp[j] in temp[j+1:] :
+                                repeated = True
+                                break
+        if not repeated :
+                outputList.append(i)
+
+print("Number Of Elements: ", len(outputList))
+
+# Approach 2
+outputList = []
+for i in range(lastnumber+1) :
+        temp = str(i)
+        charecterList = set([*temp])
+        if len(temp) == len(charecterList) :
+                outputList.append(i)
+
+print("Number Of Elements: ", len(outputList))
+
+
+# ValueLabs
+###########
+input = [1,2,3,1,2,3,3,4,4,4,5,5,5,6,6,9,9]
+uniqueInput = set(input)
+frequencyDict = {}
+
+for number in uniqueInput :
+        frequencyDict[number] = 0
+
+for number in input :
+        frequencyDict[number] += 1
+
+print(frequencyDict)
+
+
+# EmployeeId, EmployeeName, DepartmentName
+
+import pandas as pd
+employeeDataFrame = pd.read_csv('Employee.csv')
+uniqueDepartmentList = employeeDataFrame['DepartmentName'].unique()
+
+for department in uniqueDepartmentList :
+    temp = employeeDataFrame[employeeDataFrame['DepartmentName']== department]
+    temp = temp[['EmployeeId', 'EmployeeName']]
+    temp.to_csv(f'Employee_List_In_{department}.csv')
+
+
+# Select count(EmployeeID), EmployeeID
+# from Employee
+# groupby EmployeeID having count(EmployeeID) > 1
+
+
+class Pincode :
+        def validateAndGenerate(self, picodeList) :
+                for i in range(len(picodeList)) :
+                        pincodeString = str(picodeList[i])
+                        pincodeLength = len(pincodeString)
+                        missingValues = '0'*(6 - pincodeLength)
+                        picodeList[i] = missingValues + pincodeString
+                return picodeList
+
+picodeList = [12, 123, 1234, 12345, 123456]
+PincodeObject = Pincode()
+output = PincodeObject.validateAndGenerate(picodeList)
+
+print(output)
+
+
+# Push File To Database Function
+# ================================================================================================
+try :
+    def push_to_db(filename, table_name, document_id,encoding) :
+        """
+        Push File to Database
+
+        Python funtion to push the incoming file to Database
+
+        Parameters
+        ----------
+        filename : str
+            Filename along with path
+        table_name : str
+            Database table name to which the contents of <filename> needs to be pushed.
+
+        Returns
+        -------
+        None
+            Returns Nothing
+
+        """
+        policy_columns = ['document_id', 'NUM_POLICY_SI','NUM_AGE_OF_VESSEL', 'LINER_STATUS_OF_VESSEL', 'NUM_LAND_TRANSIT_PRIVATE_PUBLIC', 'NUM_POL_DEDUCTIBLE', 'NUM_POL_PER_DEDUCTIBLE', 'NUM_POLICY_PREMIUM', 'NUM_PREMIUM_SRCC', 'NUM_PREMIUM_WAR', 'NUM_COINSURANCE_STATUS', 'NUM_COINSURANCE_SHARE','NUM_NET_PREMIUM', 'NUM_POLICY_STATUS', 'NUM_SCOPE_OF_COVER']
+ 
+        quoted = urllib.parse.quote_plus(connection_string)
+        engine = create_engine(f'mssql+pyodbc:///?odbc_connect={quoted}', connect_args={'connect_timeout': 8000})
+        
+        for df in pd.read_table(filename, chunksize=10000, iterator=True, sep=',',encoding=encoding): #encoding = "ISO-8859-1"
+            #for i in policy_columns:
+                #df[i].fillna(0,inplace=True)
+                #df[i].astype(float).astype(int)
+            df.to_sql(con=engine, schema="dbo", name=table_name, if_exists='append', index=False)
+except :
+    print(traceback.format_exc())
+
+
+data = {
+  "library": {
+    "books": [
+      {
+        "title": "Structure and Interpretation of Computer Programs",
+        "authors": [
+          "Abelson",
+          "Sussman"
+        ],
+        "isbn": "9780262510875",
+        "price": 38.9,
+        "copies": 2
+      },
+      {
+        "title": "The C Programming Language",
+        "authors": [
+          "Kernighan",
+          "Richie"
+        ],
+        "isbn": "9780131103627",
+        "price": 33.59,
+        "copies": 3
+      },
+      {
+        "title": "The AWK Programming Language",
+        "authors": [
+          "Aho",
+          "Kernighan",
+          "Weinberger"
+        ],
+        "isbn": "9780201079814",
+        "price": 23.38,
+        "copies": 1
+      },
+      {
+        "title": "Compilers: Principles, Techniques, and Tools",
+        "authors": [
+          "Aho",
+          "Lam",
+          "Sethi",
+          "Ullman"
+        ],
+        "isbn": "9780201100884",
+        "price": 23.38,
+        "copies": 1
+      }
+    ],
+    "loans": [
+      {
+        "customer": "10001",
+        "isbn": "9780262510875",
+        "return": "2016-12-05"
+      },
+      {
+        "customer": "10003",
+        "isbn": "9780201100884",
+        "return": "2016-10-22"
+      },
+      {
+        "customer": "10003",
+        "isbn": "9780262510875",
+        "return": "2016-12-22"
+      }
+    ],
+    "customers": [
+      {
+        "id": "10001",
+        "name": "Joe Doe",
+        "address": {
+          "street": "2 Long Road",
+          "city": "Winchester",
+          "postcode": "SO22 5PU"
+        }
+      },
+      {
+        "id": "10002",
+        "name": "Fred Bloggs",
+        "address": {
+          "street": "56 Letsby Avenue",
+          "city": "Winchester",
+          "postcode": "SO22 4WD"
+        }
+      },
+      {
+        "id": "10003",
+        "name": "Jason Arthur",
+        "address": {
+          "street": "1 Preddy Gate",
+          "city": "Southampton",
+          "postcode": "SO14 0MG"
+        }
+      }
+    ]
+  }
+}
+
+
+import pandas as pd
+dataFrame = pd.DataFrame(data['library']['books'])
+dataFrame['authors'] = dataFrame['authors'].any
+dataFrame.fillna('', inplace=True)
+dataFrame.to_xml('temp.xml', attr_cols=['title', 'authors', 'isbn', 'price', 'copies'])
+dataFrame.to_xml('temp.xml',)
+'''
